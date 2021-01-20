@@ -1,0 +1,262 @@
+\documentclass[12pt,letterpaper]{article}
+\setcounter{page}{0}
+
+\usepackage{bbm}
+\usepackage{hhline}
+\usepackage[multiple]{footmisc}
+\usepackage{floatpag,amsmath,amsthm,amssymb}
+\usepackage{changepage}
+
+% Figure panel header font
+\newcommand{\panel}{\fontfamily{phv}\selectfont\scriptsize\textbf}
+\usepackage{amsmath} 
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LOAD LOCAL COMPILATION PATHS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\HOME}{\string~}
+
+%% DON'T ADD NEW FILEPATH LINES -- CHANGE ~/include.tex INSTEAD
+\input{\HOME/include.tex}
+
+% include standard package
+\input{\includepath/front_matter}
+
+% disable hyperlinks, which were breaking on appendix references
+\usepackage[options]{nohyperref}
+
+\title{Development Research at High Geographic Resolution: \\ An
+  Analysis of Night Lights, Firms, and Poverty in India \\ using the
+  SHRUG Open Data Platform}
+
+\author{ \\ Sam Asher \\ Tobias Lunt \\ Ryu Matsuura \\ Paul Novosad \\ }
+
+%%%%%%%%%%%%%%%%%%%%%% 
+% TITLE PAGE
+%%%%%%%%%%%%%%%%%%%%%% 
+\begin{document}
+\date{}
+\maketitle \\ \\
+
+\begin{center}
+{\large Online Appendix: Additional Tables and Figures}
+\end{center}
+
+\begin{appendix}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% APPENDIX TABLES AND FIGURES %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\setcounter{pag}{1} \doublespacing
+
+% reset table/figure numbers and prefix with A
+\setcounter{table}{0}
+\renewcommand{\thetable}{S\arabic{table}}
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{S\arabic{figure}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% table: population share matched to the SHRUG %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{landscape}
+  \begin{table}[H]
+    \caption{Population Share Matched to the SHRUG, by State} 
+    \vspace{-5mm}
+
+    \begin{center}
+      \tiny{\input{\shrugpath/pc_state_pop_full}}
+    \end{center}
+
+    \footnotesize \item \textit{Source}: Authors' analysis based on data in the \href{http://www.devdatalab.org/shrug}{Socioeconomic High-resolution
+    Rural-Urban Geographic Dataset on India}.
+     \item \textit{Note}: Table \ref{tab:pc_state_pop_full} presents the state-level
+       population included in the SHRUG panel (numerator), the
+       state-level population in the Population Census datasets
+       (denominator), and the share of state-level population captured
+       by the SHRUG, for all states and union territories in
+       India. Population numbers are reported in
+       thousands. Chhattisgarh, Jharkhand, and Uttarakhand were
+       created in 2000 and are thus left blank in earlier years.
+
+    \label{tab:pc_state_pop_full}
+  \end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% table: employment matched to the SHRUG %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{table}[H]
+    \caption{Employment Share Matched to the SHRUG, by State} 
+    \vspace{-5mm}
+
+  \begin{center}
+    \tiny{\input{\shrugpath/ec_state_emp_full}}
+  \end{center}
+    
+  \footnotesize \textit{Source}: Authors' analysis based on data in the \href{http://www.devdatalab.org/shrug}{Socioeconomic High-resolution
+    Rural-Urban Geographic Dataset on India}.\\
+  \footnotesize \textit{Note}: Table \ref{tab:ec_state_emp_full} presents
+  the state-level employment included in the SHRUG panel
+  (numerator), the state-level employment in the Economic Census
+  datasets (denominator), and the share of state-level employment
+  captured by the SHRUG, for all states and union territories in
+  India. Employment numbers are reported in
+  thousands. Chhattisgarh, Jharkhand, and Uttarakhand were
+  created in 2000 and are thus left blank in earlier years.
+
+  \label{tab:ec_state_emp_full}
+  \end{table}
+%\end{landscape}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% table: asset decomp-rural %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+  \begin{table}[H]
+    \caption{Asset Decomposition of Small Area Consumption Estimates: \cnewline Rural Households} 
+  \begin{center}
+    \scriptsize{\input{\shrugpath/sae_decomp_rural}}
+  \end{center}
+    \scriptsize \textit{Source}: Authors' analysis based on data in the \href{http://www.devdatalab.org/shrug}{Socioeconomic High-resolution
+      Rural-Urban Geographic Dataset on India}. \\
+    \scriptsize \textit{Note}: Table~\ref{tab:sae_decomp_rural} presents a
+    comparison of IHDS and SECC covariates that were used to generate
+    per capita consumption small area estimates in the rural
+    SHRUG. The IHDS and SECC columns indicate the value for each
+    covariate in the SECC and IHDS surveys taken at the village level;
+    because the SECC is a census, no weights were required, while the
+    IHDS required the use of sampling weights. Column 3 presents the
+    difference between the two. Column 4 shows the coefficient for
+    each covariate when regressing per capita consumption on the set
+    of covariates in the IHDS. Column 5 multiplies column 4 by column
+    3, representing the expected difference in per capita consumption
+    between IHDS and SHRUG that is explained by that covariate. The
+    omitted category for roof and wall materials was ``other.''
+    
+    \label{tab:sae_decomp_rural}
+  \end{table}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% table: asset decomp-urban %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+  \begin{table}[H]
+    \caption{Asset Decomposition of Small Area Consumption Estimates: \cnewline Urban Households} 
+      \begin{center}
+        \scriptsize{\input{\shrugpath/sae_decomp_urban}}
+      \end{center}
+
+    \scriptsize \textit{Source}: Authors' analysis based on data in the \href{http://www.devdatalab.org/shrug}{Socioeconomic High-resolution
+      Rural-Urban Geographic Dataset on India}. \\
+    \scriptsize \textit{Note}: Table~\ref{tab:sae_decomp_urban} presents a
+    comparison of IHDS and SECC covariates that were used to generate
+    per capita consumption small area estimates in the urban
+    SHRUG. The IHDS and SECC columns indicate the value for each
+    covariate in the SECC and IHDS surveys taken at the village level;
+    because the SECC is a census, no weights were required, while the
+    IHDS required the use of sampling weights. Column 3 presents the
+    difference between the two. Column 4 shows the coefficient for
+    each covariate when regressing per capita consumption on the set
+    of covariates in the IHDS. Column 5 multiplies column 4 by column
+    3, representing the expected difference in per capita consumption
+    between IHDS and SHRUG that is explained by that covariate. The
+    omitted category for roof and wall materials was ``other.''
+    \label{tab:sae_decomp_urban}
+  \end{table}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% table: xc night lights, controlling for other vars %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{table}[H]
+  \caption{Cross-Sectional Partial Correlations of Night Lights} 
+
+  \begin{center}
+    \footnotesize{\input{\shrugpath/nl_xc_controls}}
+  \end{center}
+  \footnotesize \textit{Source}: Authors' analysis based on data in the \href{http://www.devdatalab.org/shrug}{Socioeconomic High-resolution
+    Rural-Urban Geographic Dataset on India}. \\
+  \footnotesize \textit{Note}: Table~\ref{tab:nl_xc_controls} shows the partial
+  correlation between rural luminosity and population, employment,
+  electricity, and consumption. Each estimate is from a separate
+  cross-sectional regression of Equation~1, with added
+  controls for all the other variables in the table. Each entry also
+  controls the number of 1km x 1km cells in the geographic
+  unit. Column 1 aggregates data to the district level, Column 2 to
+  the subdistrict level, and Columns 3 and 4 to the village
+  level. Columns 2-4 are clustered at the district level. The table is
+  comparable to Table~3, but is rural only and has additional controls
+  for the other outcome variables in the table. 
+  \label{tab:nl_xc_controls}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% time series night lights: robustness checks %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{table}[H]
+  \caption{Time Series Correlates of Night Lights: Robustness Checks} 
+  
+  \begin{center}
+    \footnotesize{\input{\shrugpath/nl_ts_app1}}
+  \end{center}
+  \footnotesize \textit{Source}: Authors' analysis based on data in the \href{http://www.devdatalab.org/shrug}{Socioeconomic High-resolution
+    Rural-Urban Geographic Dataset on India}. \\
+  \footnotesize \textit{Note}: Table~\ref{tab:nl_ts_app1} shows the time series
+  relationship between a set of rural development outcomes and
+  night-time luminosity at the village level. Columns 1 and 2 restrict
+  the data sample to 2001--2013. Columns 3 and 4 weight regressions by
+  village population. Otherwise, estimates are similar to Columns 3
+  and 4 in Table~4. All variables are measured in
+  logs. All regressions include village fixed effects and are
+  clustered at the district level.
+  \label{tab:nl_ts_app1}
+\end{table}
+
+%%%%%%%%%%%%%%%%%
+%% error rates %%
+%%%%%%%%%%%%%%%%%
+
+\begin{figure}[H]
+  \caption{Error Rates from Imputation Simulation}
+  \begin{center}
+  \begin{tabular}{c}
+    \panel{A. Mean Absolute Imputation Error} \\
+    \includegraphics[scale=0.7]{\shrugpath/impute_sim_mad} \\
+    \panel{B. Signed Imputation Error} \\
+    \includegraphics[scale=0.7]{\shrugpath/impute_sim_error} \\
+  \end{tabular}
+  
+  \end{center}
+  \begin{adjustwidth}{2cm}{2cm}
+    \scriptsize{\textit{Source}: Authors' analysis based on data in
+      the \href{http://www.devdatalab.org/shrug}{Socioeconomic
+        High-resolution Rural-Urban Geographic Dataset on
+        India}. \\ \textit{Note}: Panel A of
+      Figure~\ref{fig:impute_error} shows the mean absolute deviation
+      of simulated estimates of constitutency population as compared
+      with actual constituency population, under scenarios where we
+      set a different share of the population to missing. We run a
+      simulation where before calculating constituency population, we
+      drop village and town observations representing X\% of
+      constituency population, and then use our imputation
+      methodology. The graph shows, for instance, that when we drop
+      20\% of the data before imputation, our average constituency has
+      a total population error of approximately 1.8\%. Panel B shows
+      the signed error rather than the absolute error, indicating a
+      very small downward bias in population estimation from our
+      method.}
+  \end{adjustwidth}
+  \label{fig:impute_error}
+\end{figure}
+
+\end{appendix}
+  
+\end{document}
