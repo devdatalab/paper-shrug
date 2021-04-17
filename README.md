@@ -26,7 +26,7 @@ Please note we use globals for pathnames, which will cause errors if filepaths h
 This code was tested using Stata 16.0. 
 
 ---
-# Data Description on SHRUG panel and SHRUG keys
+# Data Description: SHRUG panel and SHRUG keys
 ------
 
 ### A)  Data Sources 
