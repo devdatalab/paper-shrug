@@ -60,7 +60,7 @@ To match data across rounds, the datasets must be collapsed to unique SHRID. For
 
    2) **SHRUG Panel**: `shrug_panel.dta`
 
-This is a panel dataset that is unique on SHID and includes selected data fields from all rounds of the Economic Census, Population Census, and Village/Town Directories. The panel has missing values for location ID values if (1) we cannot match the PC11 observation to any wave for which the panel has missing value or (2) there are multiple towns/villages that are matched to one SHRID. For variable description, please refer to the variable label.
+This is a panel dataset that is unique on SHRID and includes selected data fields from all rounds of the Economic Census, Population Census, and Village/Town Directories. The panel has missing values for location ID values if (1) we cannot match the PC11 observation to any wave for which the panel has missing value or (2) there are multiple towns/villages that are matched to one SHRID. For variable description, please refer to the variable label.
 
 ### C) Data coverage
 
@@ -71,7 +71,7 @@ These data are therefore *not* suitable for describing aggregate (e.g. national 
 The table below shows the data coverage:
 
       ---------------------------------------------
-      Year  Census  Sector  No. of obs.     w/ SHID
+      Year  Census  Sector  No. of obs.     w/ SHRID
       ---------------------------------------------
       1990      EC   Rural       549985      485386  
       1990      EC   Urban         4480        2181  
