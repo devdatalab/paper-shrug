@@ -1,8 +1,28 @@
-/* This makefile runs all the analysis files for results in the  SHRUG paper */
-global out /scratch/sharma/shrug_test/out
-global repdata /scratch/sharma/shrug_test
-global tmp /scratch/sharma/shrug_test/tmp
-global shcode ~/ddl/core/shrug
+/*****************************************************/
+/* SHRUG  DATA BUILD AND ANALYSIS FOR REPLICATION    */
+/*****************************************************/
+
+/********************************************/
+/* FRONT MATTER: PATHS, PROGRAMS, AND TOOLS */
+/********************************************/
+
+/* clear any existing globals, programs, data to make sure they don't clash */
+clear all
+
+/* Stata programs required from SSC:
+ssc install unique
+*/
+
+/* set the following globals:
+$out: path where output files will be created
+$repdata: path to initial data inputs 
+$tmp: intermediate data files will be put here
+$shcode: path to folder of build and analysis .do and .py files*/
+
+global out 
+global repdata 
+global tmp
+global shcode
 
 /* redirect several directories used in the code to $repdata */
 global shdata $repdata
