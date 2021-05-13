@@ -30,7 +30,9 @@ This code was tested using Stata 16.0.
 ------
 
 ### A)  Data Sources 
-The data comes from 1990, 1998, 2005, and 2013 Economic Censuses (3rd through 6th rounds) and 1991, 2001, 2011 Population Censuses and Village/Town Directories reported by the Indian government.
+- The data comes from 1990, 1998, 2005, and 2013 Economic Censuses (3rd through 6th rounds) and 1991, 2001, 2011 Population Censuses and Village/Town Directories reported by the Indian government. 
+- Night Lights data used in paper analysis are annual composites of remotely sensed data from the Defense Meteorological Satellite Program Operational Linescan System (DMSP-OLS) at 30 arc second resolution.
+- Consumption per capita comparisons in this paper also utilize data from the National Sample Survey (NSS) and India Human Development Survey (IHDS).
 
 ### B) Datasets
  We include two types of datasets in Stata format:
