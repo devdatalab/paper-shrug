@@ -83,8 +83,9 @@ prog def rbin
 end
 /* *********** END program rbin ***************************************** */
 
-
+/****************************/
 /* prepare analysis dataset */
+/****************************/
 
 /* get pop, manuf and service employment from shrug  */
 use $shrug/data/shrug_ec13, clear
