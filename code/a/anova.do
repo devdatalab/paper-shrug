@@ -27,7 +27,7 @@ gen nl_pc = total_light_cal_2013 / pc11_pca_tot_p
 gen f_lab_shr = pc11_pca_tot_work_f / pc11_pca_tot_work_p
 gen density = pc01_pca_tot_p / pc01_area
 
-/* TMP: fix errors in consumption variable */
+/* fix errors in consumption variable */
 replace secc_cons_pc_urban = . if secc_cons_pc_urban == 0
 replace secc_cons_pc_rural = . if secc_cons_pc_rural == 0
 
