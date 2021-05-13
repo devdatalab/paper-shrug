@@ -18,7 +18,6 @@
 
 /**********************************************************************************************************************/
 /* program impute_shrid_pop : Impute population for missing villages based on other villages in the same constituency */
-/*   note: this is copy-pasted from collapse_shrug_to_con.do exactly */
 /**********************************************************************************************************************/
 cap prog drop impute_shrid_pop
 prog def impute_shrid_pop
@@ -59,18 +58,6 @@ use $shrug/keys/shrug_con_key_2008, clear
 get_shrug_var pc11_pca_tot_p 
 drop if mi(pc11_pca_tot_p)
 
-// /* drop constituencies where total pc11 population is too big or small */
-// get_shrug_key pc11_state_id 
-// merge m:1 pc11_state_id using $tmp/mean_con_pop, keep(match master) keepusing(mean_con_pop)
-// 
-// /* get total constituency population based on shrid match */
-// bys ac08_id: egen con_pop = total(pc11_pca_tot_p)
-// tag ac08_id
-// gen con_pop_ratio = con_pop / mean_con_pop
-// assert !mi(con_pop_ratio)
-// drop if !inrange(con_pop_ratio, .4, 2.5)
-// drop con_pop con_pop_ratio mean_con_pop 
-
 /* get shrid populations in all years and state names */
 get_shrug_var pc11_pca_tot_p_r pc11_pca_tot_p_u pc01_pca_tot_p pc01_pca_tot_p_r pc01_pca_tot_p_u
 get_shrug_key pc11_state_name
@@ -94,15 +81,11 @@ qui forval threshold = .01(.01).30 {
 
   /* set a random subset of pc01 populations to missing */
   foreach loc in "_r" "_u" {
-    //   replace pc01_pca_tot_p_r = . if runiform() < `threshold'
-    //   replace pc01_pca_tot_p_u = . if runiform() < `threshold'
     replace pc01_pca_tot_p = . if runiform() < `threshold'
   }
 
   /* impute missing all missing 2001 populations */
   gen pop_old = pc01_pca_tot_p 
-  // impute_shrid_pop, group_id(ac08_id) base_year(11) target_year(01) pca_suffix(_r)
-  // impute_shrid_pop, group_id(ac08_id) base_year(11) target_year(01) pca_suffix(_u)
   impute_shrid_pop, group_id(ac08_id) base_year(11) target_year(01) pca_suffix("")
 
   /* drop intermediate variables used in population imputation */
@@ -111,8 +94,6 @@ qui forval threshold = .01(.01).30 {
 
   /* compare the result to the original file with no drops */
   ren pc01_pca_tot_p pop01_imputed
-  // ren pc01_pca_tot_p_r pop01_imputed_r
-  // ren pc01_pca_tot_p_u pop01_imputed_u
 
   /* merge in the SHRUG version of the data with no missing population */
   merge 1:1 shrid using $shrug/intermediate/con_pre_impute_08, keepusing(pc01_pca_tot_p)
