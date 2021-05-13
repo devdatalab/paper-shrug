@@ -1,3 +1,5 @@
+/* START HERE. THIS IS THE MASTER MAKEFILE - MODIFY PATHS BELOW THEN RUN */
+
 /*****************************************************/
 /* SHRUG  DATA BUILD AND ANALYSIS FOR REPLICATION    */
 /*****************************************************/
