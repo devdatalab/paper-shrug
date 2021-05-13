@@ -27,7 +27,7 @@ foreach sector in urban rural {
   /********************************************/
   /* open IHDS and prepare for mean reporting */
   /********************************************/
-  use $ihds/sae/all_ihds_data, clear
+  use $repdata/sae/all_ihds_data, clear
   ren WT wt
   
   if "`sector'" == "urban" keep if URBAN2011 == 1
