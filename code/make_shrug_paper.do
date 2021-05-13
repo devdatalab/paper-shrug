@@ -68,7 +68,6 @@ do $shcode/b/prep_cons_comparison.do
 do $shcode/a/anova.do
 
 /* table of SECC and IHDS small-area-estimate asset comparison */
-
 do $shcode/a/table_sae_decomp.do
 
 /* consumption comparison of IHDS, NSS, SHRUG */
