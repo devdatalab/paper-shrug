@@ -71,7 +71,6 @@ qui forval b = 1/$nboot {
   /* run the regressions and store the bootstrap coef */
   quireg ln_consumption ln_light2012 ln_num_cells, robust title(ln_consumption) absorb(sdgroup)
   append_est_to_file using $tmpfile, b(ln_light2012) s(txc_d_cons,`b') 
-
 }
 
 /***********************/
@@ -130,8 +129,6 @@ foreach stat in vxc_d vxc_sd txc_d {
   insert_into_file using $output_csv, key(`stat'_cons_starbeta) val("`starbeta'")
   insert_into_file using $output_csv, key(`stat'_cons_se) val(`se')
 }
-
-shell diff $out/nl_xc.csv $output_csv
 
 /* create the output table */
 table_from_tpl, t($shcode/a/nl_xc.tpl) r($output_csv) o($out/nl_xc_boot.tex)
