@@ -182,8 +182,8 @@ foreach spec in rural urban both {
 
   /* merge in consumption variables for bootstrapping */
   keep pc11_sector pc11_state_id pc11_district_id pc11_subdistrict_id shrid total_light2012 num_cells sdgroup sdsgroup pc11_pca_tot_p ec13_emp_all ec13_emp_manuf ec13_emp_serv pc11_power pc11_td_power_share
-  merge 1:1 shrid using $secc/mord/dta/ancillary/shrug_rural_cons_boot, keepusing(secc_cons_pc_*) keep(match master) nogen
-  merge 1:1 shrid using $secc/parsed_draft/dta/ancillary/shrug_urban_cons_boot, keepusing(secc_cons_pc_*) keep(match master) nogen update
+  merge 1:1 shrid using $shrug/data/shrug_rural_cons_boot, keepusing(secc_cons_pc_*) keep(match master) nogen
+  merge 1:1 shrid using $shrug/data/shrug_urban_cons_boot, keepusing(secc_cons_pc_*) keep(match master) nogen update
   drop if mi(secc_cons_pc_1)
   save $tmp/shrug_boot_pre_collapse_`spec', replace
 
