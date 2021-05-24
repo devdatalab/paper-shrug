@@ -50,6 +50,10 @@ if "$out" == "" | regexm("$out", "iec|ddl") ///
     | "$shcode" == "" | regexm("$shcode", "iec") ///
     exit 1
 
+/* load DDL tools and SHRUG programs */
+do $shcode/ado/tools.do
+do $shcode/ado/shrug_progs.do
+	
 /***************/
 /* preparation */
 /***************/
