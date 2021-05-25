@@ -753,5 +753,58 @@ prog def get_shrug_var
 }
 end
 /* *********** END program get_shrug_var ***************************************** */
+
+/*************************************************************************************************/
+/* program get_shrug_key : automagically get a variable from a shrug key -- like pc91_state_name */
+/*************************************************************************************************/
+cap prog drop get_shrug_key
+prog def get_shrug_key
+{
+  syntax anything, [verbose]
+  qui {
+    tokenize `anything'
+    tempfile tmp
+
+    while !mi("`1'") {
+      
+      /* get the file name with this string in it */
+      shell grep "[ ]`1'" ~/iec/output/pn/shrug_keylist.txt | cut -f 1 -d "," >`tmp'
+
+      /* read the filename into a stata variable */
+      file open gsk_fh using `tmp', read
+      file read gsk_fh filename
+      file close gsk_fh
+
+      /* if nothing was found, warn and loop */
+      if mi(trim("`filename'")) {
+        noi di "WARNING: Could not find `1'"
+        mac shift
+        continue
+      }
+
+      /* merge to the shrug key. Note that unlike get_shrug_var this is 1:m, requires unique shrid in master, b/c keys not unique on shrids */
+      if !mi("`verbose'") {
+        noi di `"merge 1:m shrid using `filename', keepusing(`1') keep(master match) nogen update"'
+      }
+
+      /* count # observations before merge */
+      count
+      local n_before_merge `r(N)'
+      merge 1:m shrid using `filename', keepusing(`1') keep(master match) nogen update
+      count if mi(`1')
+      if `r(N)' > 0 {
+        noi di %6.0f `r(N)' " observations do not have `1'"
+      }
+      count
+      if `r(N)' > `n_before_merge' {
+        noi di "Warning: Dataset is not unique on shrids anymore.  " %1.0f `r(N)' " new observations were added due to 1:m key."
+      }
+      mac shift
+    }
+  }
+  
+}
+end
+/* *********** END program get_shrug_key ***************************************** */
   
  }
