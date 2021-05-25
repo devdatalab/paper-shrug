@@ -692,4 +692,66 @@ end
   end
   /* *********** END program useshrug ***************************************** */
   
+  /**********************************************************************************/
+/* program get_shrug_var : automagically gets a variable from the shrug           */
+/* Example:
+  - get_shrug_var pc11_pca_tot_p ec13_emp_all ec05_emp_all ec13_emp_obc           */
+/**********************************************************************************/
+cap prog drop get_shrug_var
+prog def get_shrug_var
+{
+  syntax anything, [verbose]
+  qui {
+
+    /* create tempfiles for the desired varlist and sourcefile list */
+    tempfile list
+    tempfile tmp
+    
+    /* Create a temporary file with the requested variable list, which expands wildcards like [1-22] */
+    shell python $PYPATH/get_vars.py --varlist "`anything'" --output_path `list'
+
+    /* read the expanded variable list one line at a time: `line' contains a variable */
+    cap file close fl
+    file open fl using `list', read
+    file read fl line
+    while r(eof) == 0 {
+
+      /* skip the variable if it already exists */
+      cap confirm variable `line'
+      if !_rc {
+        noi di "WARNING: Ignoring request for `line', which is already in current dataset"
+        file read fl line
+        continue
+      }
+    
+      /* use grep to get the file name with this string in it */
+      shell grep "[ ]`line'" ~/iec/output/pn/shrug_varlist.txt | cut -f 1 -d "," >`tmp'
+
+      /* read the filename into a stata variable */
+      file open gsv_fh using `tmp', read
+      file read gsv_fh filename
+      file close gsv_fh
+
+      /* if nothing was found, warn and loop */
+      if mi(trim("`filename'")) {
+        noi di "WARNING: Could not find `line'"
+        file read fl line
+        continue
+      }
+      if !mi("`verbose'") {
+        noi di `"merge m:1 shrid using `filename', keepusing(`line') keep(master match) nogen update"'
+      }
+      merge m:1 shrid using `filename', keepusing(`line') keep(master match) nogen update
+      count if mi(`line')
+      if `r(N)' > 0 {
+        noi di %6.0f `r(N)' " observations do not have `line'"
+      }
+      file read fl line
+    }
+    file close fl
+  }
+}
+end
+/* *********** END program get_shrug_var ***************************************** */
+  
  }
