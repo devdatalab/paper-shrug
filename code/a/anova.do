@@ -71,5 +71,5 @@ foreach var in $varlist {
 }
 
 /* create table from regressions */
-table_from_tpl, t($shcode/tables/var_decomp_panel.tpl) r($file) o($out/var_decomp_con_panel.tex)
+table_from_tpl, t($repdata/paper-shrug/tex/var_decomp_panel.tpl) r($file) o($out/var_decomp_con_panel.tex)
 cat $out/var_decomp_con_panel.tex

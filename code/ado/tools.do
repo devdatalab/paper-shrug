@@ -1,6 +1,163 @@
 qui {
 
   /* DDL STATA TOOLS */
+  
+   /***************************************************************************************************/
+  /* program table_from_tpl : Create a table from a stored estimates file and a .tex table template  */
+  /***************************************************************************************************/
+  cap prog drop table_from_tpl
+  prog def table_from_tpl
+    {
+        syntax, Template(string) Replacement(string) Output(string) [Verbose addstars dropstars]
+
+        /* set up verbose flag */
+        if !mi("`verbose'") {
+              local v "-v"
+          }
+        else {
+              local v
+          }
+
+        /* set path for python code to the tools folder in this repo */
+        local path $shcode/py
+
+        /* check python file existence */
+        cap confirm file `path'/table_from_tpl.py
+        if _rc {
+              display as error "ERROR: table_from_tpl.py not found. Put in current folder or folder defined by global \$PYTHONPATH"
+              error -1
+          }
+
+        /* deal with addstars/dropstars parameters */
+        if "`addstars'" == "addstars" {
+            local star_param "--add-stars"
+          }
+        if "`dropstars'" == "dropstars" {
+            local star_param "--drop-stars"
+          }
+
+        local pycommand `path'/table_from_tpl.py -t `template' -r `replacement' -o `output' `v' `star_param'
+        if !mi("`verbose'") {
+              di `"Running `pycommand' "'
+          }
+
+        shell python `pycommand'
+        cap confirm file `output'
+        if !_rc {
+            display "Created `output'."
+          }
+        else {
+            display "Could not create `output'."
+            error 1
+          }
+
+        /* clean up the temporary file if star/nostar specified */
+        if !mi("`stars'") {
+            !rm $tmp/tpl_sed_tmp.tex
+          }
+      }
+    end
+  /* *********** END program table_from_tpl ***************************************** */
+
+  /**********************************************************************************/
+  /* program insert_into_file : Insert a key-value pair into a file                 */
+  /*
+  Assume "using" csv file take a key, value format, e.g.:
+  est1,3.544
+  est2,3.234***
+  ...
+  "est1" is the key. "3.544" is the value.
+  Example:
+  insert_into_file using $tmp/estimates.csv, key(est1) value(3.54493) format(%5.2f)
+  - if "est1" is not already in estimates file, it will be appended
+  - if "est1" is already in estimates file, its value will be replaced with the passed in parameter
+  - estimates file will be created if it does not already exist
+  */
+
+  /***********************************************************************************/
+  cap prog drop insert_into_file
+  prog def insert_into_file
+    {
+        syntax using/, Key(string) Value(string) [Format(string) verbose]
+
+        /* set default format if not specified */
+        if mi("`format'") local format "%6.3f"
+
+        /* get value in correct format (unless it's a string) */
+        if !mi(real("`value'")) {
+            local value : di `format' `value'
+          }
+        else {
+            local value `value'
+          }
+
+        /* confirm file handles are closed */
+        cap file close fout
+        cap file close fin
+
+        /* create a temporary file for writing */
+        tempfile tempfile
+        qui file open fout using `tempfile', write replace
+
+        /* if input file doesn't exist, display a notification that we will create the file */
+        cap confirm file `using'
+        if _rc {
+            if !mi("`verbose'") {
+                di "Creating new file `using'..."
+              }
+
+            /* set found to zero so the line gets appended at the end */
+            local found 0
+          }
+
+        /* else, open the input file and read the first line */
+        else {
+            file open fin using `using', read
+
+            /* read the first line */
+            file read fin line
+
+            /* store a flag indicating whether we found the line or not */
+            local found 0
+
+            /* loop over all lines of the file */
+            while r(eof) == 0 {
+
+                /* check if line matches the current key */
+                if regexm("`line'", "^`key',") {
+
+                    /* if verbose, show what we're replacing  */
+                    if !mi("`verbose'") {
+                        di `"Replacing "`line'" with "`key',`value'"..."'
+                      }
+                    local found 1
+
+                    /* replace the line with key,value */
+                    local line `key',`value'
+                  }
+
+                /* write the line to the output file */
+                file write fout "`line'" _n
+
+                /* read the next line */
+                file read fin line
+              }
+          }
+
+        /* if we didn't find this key, append it to the end */
+        if `found' == 0 {
+            file write fout "`key',`value'" _n
+          }
+
+        /* close input and output files */
+        cap file close fin
+        file close fout
+
+        /* copy the temporary file to the `using` filename */
+        copy `tempfile' `using', replace
+      }
+    end
+  /* *********** END program insert_into_file ***************************************** */
 
   /**************************************************************************************************/
   /* program app : short form of append_to_file: app $f, s(foo) == append_to_file using $f, s(foo) */
