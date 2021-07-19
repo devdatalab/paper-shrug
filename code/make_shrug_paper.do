@@ -13,6 +13,11 @@ clear all
 
 /* Stata programs required from SSC:
 ssc install unique
+ssc install binscatter
+ssc install _gwtmean
+net cd users
+net cd vwiggins
+net install grc1leg
 */
 
 /* set the following globals:

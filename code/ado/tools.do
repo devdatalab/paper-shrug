@@ -2,6 +2,65 @@ qui {
 
   /* DDL STATA TOOLS */
   
+  /*************************************************************************************/
+/* program store_est_tpl : store b, se, p-values in format suitable for table_to_tpl */
+/*************************************************************************************/
+cap prog drop store_est_tpl
+prog def store_est_tpl
+{
+  syntax using/,  coef(string) name(string) [format(string) beta se p n r2 all]
+
+  /* turn on all flags if `all' is specified */
+  if !mi("`all'") {
+    local beta beta
+    local se se
+    local p p
+    local n n
+    local r2 r2
+  }
+
+  /* set default format if not specified */
+  if mi("`format'") local format "%6.3f"
+
+  /* manage beta */
+  if !mi("`beta'") {
+
+    /* store beta in the desired format */
+    local b3:  di `format' _b["`coef'"]
+    test `coef' = 0
+    local pvalue = `r(p)'
+    /* write p value (only makes sense if beta also specified) */
+    if !mi("`p'") {
+      insert_into_file using `using', key("`name'_p") value(" `pvalue'") format("%5.2f")
+    }
+
+    /* write beta to file */
+    insert_into_file using `using', key("`name'_beta") value(" `b3'") format("`format'")
+
+    /* count stars on the p and create starbeta */
+    count_stars, p(`pvalue')
+    insert_into_file using `using', key("`name'_starbeta") value(" `b3'`r(stars)'") format("`format'")
+  }
+
+  /* manage se */
+  if !mi("`se'") {
+    local se3:  di `format' _se["`coef'"]
+    insert_into_file using `using', key("`name'_se") value(" `se3'")
+  }
+  
+  /* manage n */
+  if !mi("`n'") {
+    insert_into_file using `using', key("`name'_n") value(" `e(N)'") format("%1.0f")
+  }
+
+  /* manage r2 */
+  if !mi("`r2'") {
+    insert_into_file using `using', key("`name'_r2") value(" `e(r2)'") format("%5.2f")
+  }
+}
+end
+/* *********** END program store_est_tpl ***************************************** */
+  
    /***************************************************************************************************/
   /* program table_from_tpl : Create a table from a stored estimates file and a .tex table template  */
   /***************************************************************************************************/

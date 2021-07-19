@@ -1,0 +1,33 @@
+high_inc_5000_10000,Income 5000-10,000 Rs
+high_inc_more_10000,Income Above 10,000 Rs
+house_own_owned,Home Ownership
+kisan_cc,Kisan Credit Card
+land_own,Land Ownership
+num_room,Number of Rooms in Home
+phone_both,Both Mobile and Landline
+phone_landline_only,Landline Phone
+phone_mobile_only,Mobile Phone
+refrig,Refrigerator
+roof_mat_brick,Brick Roof
+roof_mat_concrete,Concrete Roof
+roof_mat_gi,GI Roof
+roof_mat_grass,Grass Roof
+roof_mat_plastic,Plastic Roof
+roof_mat_slate,Slate Roof
+roof_mat_stone,Stone Roof
+roof_mat_tile,Tile Roof
+vehicle_four,Four Wheeled Vehicle
+vehicle_two,Two Wheeled Vehicle
+wall_mat_brick,Brick Walls
+wall_mat_concrete,Concrete Walls
+wall_mat_gi,GI Walls
+wall_mat_grass,Grass Walls
+wall_mat_mud,Mud Walls
+wall_mat_plastic,Plastic Walls
+wall_mat_stone,Stone Walls
+wall_mat_wood,Wooden Walls
+exc_latrine,Indoor Toilet
+computer,Computer
+ac,Air Conditioning
+kitchen,Separated Kitchen
+wash_mac,Washing Machine
