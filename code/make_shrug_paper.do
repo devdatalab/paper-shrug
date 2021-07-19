@@ -13,13 +13,19 @@ clear all
 
 /* Stata programs required from SSC:
 ssc install unique
+ssc install binscatter
+ssc install _gwtmean
+net cd users
+net cd vwiggins
+net install grc1leg
 */
 
 /* set the following globals:
 $out: path where output files will be created
 $repdata: path to initial data inputs 
 $tmp: intermediate data files will be put here
-$shcode: path to folder of build and analysis .do and .py files*/
+$shcode: path to folder of build and analysis .do and .py files
+*/
 
 global out 
 global repdata 
@@ -29,6 +35,7 @@ global shcode
 /* redirect several directories used in the code to $repdata */
 global shdata $repdata
 global shrug $repdata
+global PYPATH $shcode/py
 
 /* display an error if any of the globals are empty or set to old values*/
 if "$out" == "" | regexm("$out", "iec|ddl") ///
@@ -57,6 +64,9 @@ do $shcode/ado/shrug_progs.do
 /***************/
 /* preparation */
 /***************/
+
+/* Rebuild variable and key lists for the SHRUG */
+rebuild_shrug_lists
 
 /* prepare dataset used in SHRUG paper analysis */
 do $shcode/b/prep_shrug_paper_data.do

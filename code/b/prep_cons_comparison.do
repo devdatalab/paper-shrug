@@ -36,7 +36,7 @@ save $tmp/shrug_cons_dist, replace
 /****************************************/
 
 /* open IHDS members data just for household size count */
-use $ihds/ihds_2011_members, clear
+use $repdata/data/ihds_2011_members, clear
 
 /* collapse to household level */
 keep hhid
@@ -44,7 +44,7 @@ gen num_members = 1
 collapse (sum) num_members, by(hhid)
 
 /* merge to household data */
-merge 1:1 hhid using $ihds/ihds_2011_hh, nogen keep(match) keepusing(stateid distid cototal wt psuid district urban2011)
+merge 1:1 hhid using $repdata/data/ihds_2011_hh, nogen keep(match) keepusing(stateid distid cototal wt psuid district urban2011)
 ren urban2011 urban
 
 /* generate per capita consumption */
@@ -92,12 +92,12 @@ save $tmp/ihds_cons_dist, replace
 /* use schedule 10 to create a household -> state/district key for NSS */
 
 /* save urban district ids in a temporary file */
-use ~/iec1/misc_data/nss68/nss_sch10_urban.dta, clear
+use $repdata/data/nss68/nss_sch10_urban.dta, clear
 keep hhid pc01_state_id pc01_district_id
 save $tmp/nss_dist_urban, replace
 
 /* append rural district ids */
-use ~/iec1/misc_data/nss68/nss_sch10.dta, clear
+use $repdata/data/nss68/nss_sch10.dta, clear
 keep hhid pc01_state_id pc01_district_id
 append using $tmp/nss_dist_urban
 duplicates drop
@@ -110,7 +110,7 @@ save $tmp/nss_dist_key, replace
 /* NSS - note use mrp for mixed reference period rather than uniform reference period. mult * 12 for annual */
 
 /* begin w/raw data to build an fsu:hhid key. FSU is village or urban block. */
-use ~/iec1/nss/nss-68/1.0/block-1-household, clear
+use $repdata/data/block-1-household, clear
 ren *, lower
 keep hhid fsu_serial_no
 ren fsu_serial_no fsu
@@ -118,7 +118,7 @@ ren hhid hhid
 save $tmp/nss_fsu_key, replace
 
 /* Use the cleaned NSS data and merge in the FSU ID. */
-use ~/iec1/nss/clean/nss-68-01-household, clear
+use $repdata/data/nss-68-01-household, clear
 merge 1:1 hhid using $tmp/nss_fsu_key, keep(match) nogen
 
 /* merge in PC district ids */

@@ -1,5 +1,44 @@
 qui {
 
+/*********************************************************************************/
+  /* program rebuild_shrug_lists : Rebuild variable and key lists for the SHRUG      */
+  /***********************************************************************************/
+  /* NOTE: it is essential for each variable to have a leading space so that get_shrug_var and get_shrug_key work properly! */
+  cap prog drop rebuild_shrug_lists
+  prog def rebuild_shrug_lists
+    {
+        di "Creating the list of SHRUG variables for get_shrug_var()..."
+        preserve
+        /* create a list of all the shrug vars */
+        qui {
+            global  f ~/shrug/output/shrug_varlist.txt
+            cap erase $f
+            foreach file in ec05 ec13 ec90 ec98 pc01_pca pc01_td pc01_vd pc11_pca pc11_td pc11_vd pc91_pca pc91_td pc91_vd secc nl_wide vcf_wide spatial pmgsy {
+                use $shrug/data/shrug_`file', clear
+                ds
+                append_to_file using $f, s($shrug/data/shrug_`file'.dta, `r(varlist)')
+              }
+          }
+
+        /* create a list of all the variables in the shrug keys */
+        qui {
+            global  f ~/shrug/output/shrug_keylist.txt
+            cap erase $f
+            cap erase
+            foreach file in ec05_district ec05r ec05_state ec05_subdistrict ec05u ec13_district ec13r ec13_state ec13_subdistrict ec13u ec90_district ec90r ec90_state ec90_subdistrict ec90u ec98_district ec98r ec98_state ec98_subdistrict ec98u pc01_district pc01r pc01_state pc01_subdistrict pc01u pc11_district pc11r pc11_state pc11_subdistrict pc11u pc91_district pc91r pc91_state pc91_subdistrict pc91u {
+                use $shrug/keys/shrug_`file'_key, clear
+                ds
+                append_to_file using $f, s($shrug/keys/shrug_`file'_key.dta, `r(varlist)')
+              }
+            use $shrug/keys/shrug_names, clear
+            ds
+            append_to_file using $f, s($shrug/keys/shrug_names.dta, `r(varlist)')
+          }
+        restore
+      }
+    end
+  /* *********** END program rebuild_shrug_lists ***************************************** */
+
 /************************************************************************************/
 /* program clear_shrug_outliers : This programs drops or flags outliers in the Shrug */
 /*

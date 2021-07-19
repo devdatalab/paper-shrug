@@ -57,7 +57,7 @@ foreach v in $tvars {
 keep shrid ln_light2012 ln_num_cells sdgroup ln_consumption
 
 /* replace consumption data with bootstrap data B */
-merge 1:1 shrid using $secc/parsed_draft/dta/ancillary/shrug_urban_cons_boot, keepusing(secc_cons_pc_*) keep(match) nogen
+merge 1:1 shrid using $repdata/data/shrug_urban_cons_boot, keepusing(secc_cons_pc_*) keep(match) nogen
 
 /* loop over bootstraps */
 di "Bootstrapping towns..."
@@ -88,7 +88,7 @@ foreach v in $vvars {
 keep shrid ln_light2012 ln_num_cells sdgroup sdsgroup ln_consumption
 
 /* replace consumption data with bootstrap data B */
-merge 1:1 shrid using $secc/mord/dta/ancillary/shrug_rural_cons_boot, keepusing(secc_cons_pc_*) keep(match) nogen
+merge 1:1 shrid using $repdata/data/shrug_rural_cons_boot, keepusing(secc_cons_pc_*) keep(match) nogen
 
 /* loop over bootstraps */
 di "Bootstrapping villages..."
