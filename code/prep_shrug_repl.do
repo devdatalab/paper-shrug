@@ -156,7 +156,7 @@ export delimited using $repdata/csv/`i' , replace
 
 /* Compile SECC means */
 do $shcode/b/prep_table_sae_decomp.do
-save $repdata/out/table_sae_decomp, replace
+save $repdata/intermediate/table_sae_decomp, replace
 
 /* ZIP DATA PACKET */
 cd $repdata/data
