@@ -2,7 +2,7 @@
 /* produce a table comparing mean values of consumption index componetns in IHDS and SECC,
    and the effect they have on the mean consumption difference. */
 
-use $repdata/data/shrug-intermediate/table_sae_decomp, clear
+use $repdata/shrug-intermediate/table_sae_decomp, clear
 
 /* manually write the table -- too many coefficients for stata-tex */
 sort sector varname

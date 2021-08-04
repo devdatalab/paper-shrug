@@ -36,7 +36,7 @@ save $tmp/shrug_cons_dist, replace
 /****************************************/
 
 /* open IHDS members data just for household size count */
-use $repdata/data/ihds_2011_members, clear
+use $repdata/ihds_2011_members, clear
 
 /* collapse to household level */
 keep hhid
@@ -44,7 +44,7 @@ gen num_members = 1
 collapse (sum) num_members, by(hhid)
 
 /* merge to household data */
-merge 1:1 hhid using $repdata/data/ihds_2011_hh, nogen keep(match) keepusing(stateid distid cototal wt psuid district urban2011)
+merge 1:1 hhid using $repdata/ihds_2011_hh, nogen keep(match) keepusing(stateid distid cototal wt psuid district urban2011)
 ren urban2011 urban
 
 /* generate per capita consumption */
