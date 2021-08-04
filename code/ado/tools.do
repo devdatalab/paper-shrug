@@ -941,7 +941,7 @@ prog def get_shrug_var
       }
     
       /* use grep to get the file name with this string in it */
-      shell grep "[ ]`line'" $repdata/shrug_varlist.txt | cut -f 1 -d "," >`tmp'
+      shell grep "[ ]`line'" $repdata/output/shrug_varlist.txt | cut -f 1 -d "," >`tmp'
 
       /* read the filename into a stata variable */
       file open gsv_fh using `tmp', read
@@ -984,7 +984,7 @@ prog def get_shrug_key
     while !mi("`1'") {
       
       /* get the file name with this string in it */
-      shell grep "[ ]`1'" $repdata/shrug_keylist.txt | cut -f 1 -d "," >`tmp'
+      shell grep "[ ]`1'" $repdata/output/shrug_keylist.txt | cut -f 1 -d "," >`tmp'
 
       /* read the filename into a stata variable */
       file open gsk_fh using `tmp', read

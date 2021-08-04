@@ -96,7 +96,7 @@ qui forval threshold = .01(.01).30 {
   ren pc01_pca_tot_p pop01_imputed
 
   /* merge in the SHRUG version of the data with no missing population */
-  merge 1:1 shrid using $shrug/intermediate/con_pre_impute_08, keepusing(pc01_pca_tot_p)
+  merge 1:1 shrid using $shrug/shrug-intermediate/con_pre_impute_08, keepusing(pc01_pca_tot_p)
 
   /* collapse to the constituency level */
   collapse (sum) pc01_pca_tot_p pop01_imputed, by(ac08_id)
