@@ -280,7 +280,7 @@ local short_power power
 global tsvars ln_pop ln_ec_emp_all ln_ec_emp_manuf ln_ec_emp_serv power 
 
 /* village-level data only */
-use $tmp/shrug_ts_village, clear
+use $tmp/shrug_ts_vt, clear
 keep if pc11_sector == 2
 foreach v in $svars {
   drop if mi(`v')
