@@ -1,7 +1,7 @@
 /* GOAL: Create SHRUG rural poverty analysis dataset */
 
 /* get rural poverty rate and consumption level */
-use shrid secc_pov_rate_tend_rural using $shrug/data/shrug_secc, clear
+use shrid secc_pov_rate_tend_rural using $shrug/shrug_secc, clear
 ren secc_pov_rate_tend_rural secc_pov_rate_rural
 
 /* get district and subdistrict ids */
@@ -15,7 +15,7 @@ ddrop shrid
 drop if mi(secc_pov_rate_rural)
 
 /* get population */
-merge 1:1 shrid using $shrug/data/shrug_pc11_pca, keepusing(pc11_pca_tot_p) keep(match) nogen
+merge 1:1 shrid using $shrug/shrug_pc11_pca, keepusing(pc11_pca_tot_p) keep(match) nogen
 drop if mi(pc11_pca_tot_p) | mi(pc11_district_id) | mi(pc11_subdistrict_id)
 
 /* create dist and subdist groups and tags */

@@ -88,11 +88,11 @@ end
 /****************************/
 
 /* get pop, manuf and service employment from shrug  */
-use $shrug/data/shrug_ec13, clear
+use $shrug/shrug_ec13, clear
 keep ec13_emp_manuf ec13_emp_serv shrid ec13_sector
 
 /* get population and district ids */
-merge 1:1 shrid using $shrug/data/shrug_pc11_pca, keepusing(pc11_pca_tot_p) keep(match) nogen
+merge 1:1 shrid using $shrug/shrug_pc11_pca, keepusing(pc11_pca_tot_p) keep(match) nogen
 merge 1:1 shrid using $shrug/keys/shrug_pc11_district_key, keepusing(pc11_state_id pc11_district_id) nogen keep(match master)
 
 /* drop missings */

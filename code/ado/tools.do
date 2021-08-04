@@ -903,7 +903,7 @@ end
   cap prog drop useshrug
   prog def useshrug
   {
-    use shrid pc11_pca_tot_p using $shrug/data/shrug_pc11_pca, clear
+    use shrid pc11_pca_tot_p using $shrug/shrug_pc11_pca, clear
   }
   end
   /* *********** END program useshrug ***************************************** */

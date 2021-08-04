@@ -1,39 +1,39 @@
 /* prepare night light analysis dataset. Consists of night lights and all of their interesting correlates. */
 
 /* start with shrids, cells, and calibrated lights from wide night light data */
-use shrid num_cells total_light_cal* using $shrug/data/shrug_nl_wide, clear
+use shrid num_cells total_light_cal* using $shrug/shrug_nl_wide, clear
 ren total_light_cal_* total_light*
 
 /* bring in employment, services, and manufacturing from all EC rounds */
 foreach y in 90 98 05 13 {
-  merge 1:1 shrid using $shrug/data/shrug_ec`y', keepusing(ec`y'_emp_all ec`y'_emp_manuf ec`y'_emp_services) nogen keep(match master)
+  merge 1:1 shrid using $shrug/shrug_ec`y', keepusing(ec`y'_emp_all ec`y'_emp_manuf ec`y'_emp_services) nogen keep(match master)
 }
 
 /* bring in total population */
 foreach y in 91 01 11 {
-  merge 1:1 shrid using $shrug/data/shrug_pc`y'_pca, keepusing(pc`y'_pca_tot_p) nogen keep(match master)
+  merge 1:1 shrid using $shrug/shrug_pc`y'_pca, keepusing(pc`y'_pca_tot_p) nogen keep(match master)
 }
 
 /* get sector in pc11 */
-merge 1:1 shrid using $shrug/data/shrug_pc11_pca, keepusing(pc11_sector) nogen keep(match master)
+merge 1:1 shrid using $shrug/shrug_pc11_pca, keepusing(pc11_sector) nogen keep(match master)
 
 /* bring in electricity */
 
 /* rural */
 foreach y in 91 01 {
-  merge 1:1 shrid using $shrug/data/shrug_pc`y'_vd, keepusing(pc`y'_vd_power_supl) nogen keep(match master)
+  merge 1:1 shrid using $shrug/shrug_pc`y'_vd, keepusing(pc`y'_vd_power_supl) nogen keep(match master)
 }
-merge 1:1 shrid using $shrug/data/shrug_pc11_vd, keepusing(pc11_vd_power_all_win pc11_vd_power_all_sum) nogen keep(match master)
+merge 1:1 shrid using $shrug/shrug_pc11_vd, keepusing(pc11_vd_power_all_win pc11_vd_power_all_sum) nogen keep(match master)
 
 /* urban */
-merge 1:1 shrid using $shrug/data/shrug_pc91_td, keepusing(pc91_td_el_dom pc91_td_res_house) nogen keep(match master)
+merge 1:1 shrid using $shrug/shrug_pc91_td, keepusing(pc91_td_el_dom pc91_td_res_house) nogen keep(match master)
 foreach y in 01 11 {
-  merge 1:1 shrid using $shrug/data/shrug_pc`y'_td, keepusing(pc`y'_td_el_dom pc`y'_td_no_hh) nogen keep(match master)
+  merge 1:1 shrid using $shrug/shrug_pc`y'_td, keepusing(pc`y'_td_el_dom pc`y'_td_no_hh) nogen keep(match master)
 }
 
 /* bring in SECC consumption and poverty rate */
 save $tmp/foo, replace
-merge 1:1 shrid using $shrug/data/shrug_secc, keepusing(secc_cons_pc_rural secc_cons_pc_urban secc_pov_rate_urban secc_pov_rate_rural) nogen keep(match master)
+merge 1:1 shrid using $shrug/shrug_secc, keepusing(secc_cons_pc_rural secc_cons_pc_urban secc_pov_rate_urban secc_pov_rate_rural) nogen keep(match master)
 
 /* bring in the district and subdistrict ids */
 merge 1:1 shrid using $shrug/keys/shrug_pc11_district_key, keep(master match) keepusing(pc11_district_id pc11_state_id) nogen
@@ -182,8 +182,8 @@ foreach spec in rural urban both {
 
   /* merge in consumption variables for bootstrapping */
   keep pc11_sector pc11_state_id pc11_district_id pc11_subdistrict_id shrid total_light2012 num_cells sdgroup sdsgroup pc11_pca_tot_p ec13_emp_all ec13_emp_manuf ec13_emp_serv pc11_power pc11_td_power_share
-  merge 1:1 shrid using $shrug/data/shrug_rural_cons_boot, keepusing(secc_cons_pc_*) keep(match master) nogen
-  merge 1:1 shrid using $shrug/data/shrug_urban_cons_boot, keepusing(secc_cons_pc_*) keep(match master) nogen update
+  merge 1:1 shrid using $shrug/shrug_rural_cons_boot, keepusing(secc_cons_pc_*) keep(match master) nogen
+  merge 1:1 shrid using $shrug/shrug_urban_cons_boot, keepusing(secc_cons_pc_*) keep(match master) nogen update
   drop if mi(secc_cons_pc_1)
   save $tmp/shrug_boot_pre_collapse_`spec', replace
 
@@ -232,7 +232,7 @@ foreach spec in rural urban both {
 /******************************************************************************/
 
 /* interpolate night lights back to 1990 and convert to wide format */
-use $shrug/data/shrug_nl_wide, clear
+use $shrug/shrug_nl_wide, clear
 ren total_light_cal_* light*
 gen g = (light2000 / light1994) ^ (1/6)
 gen light1990 = light1994  / (g ^ 4)

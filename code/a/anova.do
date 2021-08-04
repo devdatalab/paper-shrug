@@ -10,10 +10,10 @@ get_shrug_key pc11_district_id pc11_state_id pc11_subdistrict_id
 duplicates drop shrid, force
 
 /* get consumption vars which aren't picked  */
-merge 1:1 shrid using $shrug/data/shrug_secc, keepusing(secc_cons_pc_rural secc_cons_pc_urban) nogen keep(master match)
+merge 1:1 shrid using $shrug/shrug_secc, keepusing(secc_cons_pc_rural secc_cons_pc_urban) nogen keep(master match)
 
 /* get total light if we didn't */
-merge 1:1 shrid using $shrug/data/shrug_nl_wide, keepusing(total_light_cal_2013) nogen keep(master match)
+merge 1:1 shrid using $shrug/shrug_nl_wide, keepusing(total_light_cal_2013) nogen keep(master match)
 
 /* compute area variable */
 gen pc01_vd_area_convert = pc01_vd_area / 100

@@ -14,9 +14,9 @@ qui {
             global  f ~/shrug/output/shrug_varlist.txt
             cap erase $f
             foreach file in ec05 ec13 ec90 ec98 pc01_pca pc01_td pc01_vd pc11_pca pc11_td pc11_vd pc91_pca pc91_td pc91_vd secc nl_wide vcf_wide spatial pmgsy {
-                use $shrug/data/shrug_`file', clear
+                use $shrug/shrug_`file', clear
                 ds
-                append_to_file using $f, s($shrug/data/shrug_`file'.dta, `r(varlist)')
+                append_to_file using $f, s($shrug/shrug_`file'.dta, `r(varlist)')
               }
           }
 
@@ -67,7 +67,7 @@ prog def clear_shrug_outliers
   */
   qui {
     /* merge data from generate_shrug_outliers.do */
-    merge 1:1 shrid using $shrug/data/shrug_outliers, keep(master match) nogen
+    merge 1:1 shrid using $shrug/shrug_outliers, keep(master match) nogen
     
     /* reset fields to missing based on each outlier flag */
   
